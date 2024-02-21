@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- Implementation of `riscv-pac` traits for `Interrupt` and `Exception` enums.
+- Tests for the `riscv-pac` trait implementations of `Interrupt` and `Exception` enums.
 - Add `Mcause::from(usize)` for use in unit tests
 - Add `Mstatus::from(usize)` for use in unit tests
 - Add `Mstatus.bits()`
@@ -16,6 +18,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add `Mstatus::update_*` helpers to manipulate Mstatus values without touching
   the CSR
 - Export `riscv::register::macros` module macros for external use
+
+### Changed
+
+- More efficient implementation of `From` traits for `Interrupt` and `Exception` enums.
 
 ### Fixed
 
