@@ -156,6 +156,8 @@ pub(crate) mod test {
         I4 = 4,
     }
 
+    unsafe impl ExternalInterruptNumber for Interrupt {}
+
     #[pac_enum(unsafe PriorityNumber)]
     #[derive(Clone, Copy, Debug, Eq, PartialEq)]
     #[repr(u8)]
@@ -174,65 +176,6 @@ pub(crate) mod test {
         C1 = 1,
         C2 = 2,
     }
-
-    // unsafe impl InterruptNumber for Interrupt {
-    //     const MAX_INTERRUPT_NUMBER: u16 = 4;
-
-    //     #[inline]
-    //     fn number(self) -> u16 {
-    //         self as _
-    //     }
-
-    //     #[inline]
-    //     fn from_number(number: u16) -> Result<Self, u16> {
-    //         if number > Self::MAX_INTERRUPT_NUMBER || number == 0 {
-    //             Err(number)
-    //         } else {
-    //             // SAFETY: valid interrupt number
-    //             Ok(unsafe { core::mem::transmute(number) })
-    //         }
-    //     }
-    // }
-
-    unsafe impl ExternalInterruptNumber for Interrupt {}
-
-    // unsafe impl PriorityNumber for Priority {
-    //     const MAX_PRIORITY_NUMBER: u8 = 3;
-
-    //     #[inline]
-    //     fn number(self) -> u8 {
-    //         self as _
-    //     }
-
-    //     #[inline]
-    //     fn from_number(number: u8) -> Result<Self, u8> {
-    //         if number > Self::MAX_PRIORITY_NUMBER {
-    //             Err(number)
-    //         } else {
-    //             // SAFETY: valid priority number
-    //             Ok(unsafe { core::mem::transmute(number) })
-    //         }
-    //     }
-    // }
-
-    // unsafe impl HartIdNumber for Context {
-    //     const MAX_HART_ID_NUMBER: u16 = 2;
-
-    //     #[inline]
-    //     fn number(self) -> u16 {
-    //         self as _
-    //     }
-
-    //     #[inline]
-    //     fn from_number(number: u16) -> Result<Self, u16> {
-    //         if number > Self::MAX_HART_ID_NUMBER {
-    //             Err(number)
-    //         } else {
-    //             // SAFETY: valid context number
-    //             Ok(unsafe { core::mem::transmute(number) })
-    //         }
-    //     }
-    // }
 
     #[test]
     fn check_interrupt_enum() {
