@@ -2,35 +2,18 @@
 //! This is a simple example of how to use the `riscv-peripheral` crate to generate
 //! peripheral definitions for a target.
 
-use riscv_pac::{ExternalInterruptNumber, HartIdNumber, InterruptNumber, PriorityNumber};
+use riscv_pac::{pac_enum, ExternalInterruptNumber};
 
 #[repr(u16)]
+#[pac_enum(unsafe HartIdNumber)]
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum HartId {
     H0 = 0,
 }
 
-unsafe impl HartIdNumber for HartId {
-    const MAX_HART_ID_NUMBER: u16 = Self::H0 as u16;
-
-    #[inline]
-    fn number(self) -> u16 {
-        self as _
-    }
-
-    #[inline]
-    fn from_number(number: u16) -> Result<Self, u16> {
-        if number > Self::MAX_HART_ID_NUMBER {
-            Err(number)
-        } else {
-            // SAFETY: valid context number
-            Ok(unsafe { core::mem::transmute(number) })
-        }
-    }
-}
-
-#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 #[repr(u16)]
+#[pac_enum(unsafe InterruptNumber)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum Interrupt {
     WATCHDOG = 1,
     RTC = 2,
@@ -86,29 +69,11 @@ pub enum Interrupt {
     I2C0 = 52,
 }
 
-unsafe impl InterruptNumber for Interrupt {
-    const MAX_INTERRUPT_NUMBER: u16 = Self::I2C0 as u16;
-
-    #[inline]
-    fn number(self) -> u16 {
-        self as _
-    }
-
-    #[inline]
-    fn from_number(number: u16) -> Result<Self, u16> {
-        if number == 0 || number > Self::MAX_INTERRUPT_NUMBER {
-            Err(number)
-        } else {
-            // SAFETY: valid interrupt number
-            Ok(unsafe { core::mem::transmute(number) })
-        }
-    }
-}
-
 unsafe impl ExternalInterruptNumber for Interrupt {}
 
-#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 #[repr(u8)]
+#[pac_enum(unsafe PriorityNumber)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub enum Priority {
     P0 = 0,
     P1 = 1,
@@ -118,25 +83,6 @@ pub enum Priority {
     P5 = 5,
     P6 = 6,
     P7 = 7,
-}
-
-unsafe impl PriorityNumber for Priority {
-    const MAX_PRIORITY_NUMBER: u8 = Self::P7 as u8;
-
-    #[inline]
-    fn number(self) -> u8 {
-        self as _
-    }
-
-    #[inline]
-    fn from_number(number: u8) -> Result<Self, u8> {
-        if number > Self::MAX_PRIORITY_NUMBER {
-            Err(number)
-        } else {
-            // SAFETY: valid priority number
-            Ok(unsafe { core::mem::transmute(number) })
-        }
-    }
 }
 
 #[cfg(feature = "aclint-hal-async")]
