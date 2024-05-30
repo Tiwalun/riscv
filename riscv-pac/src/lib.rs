@@ -7,7 +7,7 @@ pub use riscv_pac_macros::*;
 ///
 /// This trait should be implemented by a peripheral access crate (PAC) on its enum of available
 /// exceptions for a specific device. Alternatively, the `riscv` crate provides a default
-/// implementation for the RISC-V ISA. Each variant must convert to a `u16` of its exception number.
+/// implementation for the RISC-V ISA. Each variant must convert to a `usize` of its exception number.
 ///
 /// # Safety
 ///
@@ -19,21 +19,21 @@ pub use riscv_pac_macros::*;
 /// * `MAX_EXCEPTION_NUMBER` must coincide with the highest allowed exception number.
 pub unsafe trait ExceptionNumber: Copy {
     /// Highest number assigned to an exception.
-    const MAX_EXCEPTION_NUMBER: u16;
+    const MAX_EXCEPTION_NUMBER: usize;
 
     /// Converts an exception to its corresponding number.
-    fn number(self) -> u16;
+    fn number(self) -> usize;
 
     /// Tries to convert a number to a valid exception.
     /// If the conversion fails, it returns an error with the number back.
-    fn from_number(value: u16) -> Result<Self, u16>;
+    fn from_number(value: usize) -> Result<Self, usize>;
 }
 
 /// Trait for enums of target-specific interrupt numbers.
 ///
 /// This trait should be implemented by a peripheral access crate (PAC) on its enum of available
 /// interrupts for a specific device. Alternatively, the `riscv` crate provides a default
-/// implementation for the RISC-V ISA. Each variant must convert to a `u16` of its interrupt number.
+/// implementation for the RISC-V ISA. Each variant must convert to a `usize` of its interrupt number.
 ///
 /// # Safety
 ///
@@ -45,14 +45,14 @@ pub unsafe trait ExceptionNumber: Copy {
 /// * `MAX_INTERRUPT_NUMBER` must coincide with the highest allowed interrupt number.
 pub unsafe trait InterruptNumber: Copy {
     /// Highest number assigned to an interrupt source.
-    const MAX_INTERRUPT_NUMBER: u16;
+    const MAX_INTERRUPT_NUMBER: usize;
 
     /// Converts an interrupt source to its corresponding number.
-    fn number(self) -> u16;
+    fn number(self) -> usize;
 
     /// Tries to convert a number to a valid interrupt source.
     /// If the conversion fails, it returns an error with the number back.
-    fn from_number(value: u16) -> Result<Self, u16>;
+    fn from_number(value: usize) -> Result<Self, usize>;
 }
 
 /// Marker trait for enums of target-specific core interrupt numbers.
