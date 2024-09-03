@@ -1,6 +1,6 @@
 on:
   push:
-    branches: [ master, riscv-rt-asm ]
+    branches: [ master ]
   pull_request:
   merge_group:
 
@@ -10,8 +10,8 @@ jobs:
   build:
     strategy:
       matrix:
-        # All generated code should be running on stable now, MRSV is 1.60.0
-        toolchain: [ stable, nightly, 1.60.0 ]
+        # All generated code should be running on stable now, MRSV is 1.61.0
+        toolchain: [ stable, nightly, 1.61.0 ]
         target:
           - riscv32i-unknown-none-elf
           - riscv32imc-unknown-none-elf
@@ -39,8 +39,12 @@ jobs:
         run: RUSTFLAGS="-C link-arg=-Triscv-rt/examples/device.x" cargo build --package riscv-rt --target ${{ matrix.target }} --example ${{ matrix.example }} --features=s-mode
       - name : Build (single-hart)
         run: RUSTFLAGS="-C link-arg=-Triscv-rt/examples/device.x" cargo build --package riscv-rt --target ${{ matrix.target }} --example ${{ matrix.example }} --features=single-hart
-      - name: Build (all features)
-        run: RUSTFLAGS="-C link-arg=-Triscv-rt/examples/device.x" cargo build --package riscv-rt --target ${{ matrix.target }} --example ${{ matrix.example }} --all-features
+      - name : Build (v-trap)
+        run: RUSTFLAGS="-C link-arg=-Triscv-rt/examples/device.x" cargo build --package riscv-rt --target ${{ matrix.target }} --example ${{ matrix.example }} --features=v-trap
+      - name : Build (all features except u-boot)
+        run: RUSTFLAGS="-C link-arg=-Triscv-rt/examples/device.x" cargo build --package riscv-rt --target ${{ matrix.target }} --example ${{ matrix.example }} --features=s-mode,single-hart,v-trap
+      - name : Build (u-boot)
+        run: RUSTFLAGS="-C link-arg=-Triscv-rt/examples/device.x" cargo build --package riscv-rt --target ${{ matrix.target }} --example empty --features=u-boot
 
   # Job to check that all the builds succeeded
   build-check:

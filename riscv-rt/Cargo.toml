@@ -1,7 +1,7 @@
 [package]
 name = "riscv-rt"
 version = "0.13.0"
-rust-version = "1.60"
+rust-version = "1.61"
 repository = "https://github.com/rust-embedded/riscv"
 authors = ["The RISC-V Team <risc-v@teams.rust-embedded.org>"]
 categories = ["embedded", "no-std"]
@@ -12,13 +12,15 @@ license = "ISC"
 edition = "2021"
 links = "riscv-rt" # Prevent multiple versions of riscv-rt being linked
 
-[features]
-s-mode = []
-single-hart = []
-
 [dependencies]
 riscv = {path = "../riscv", version = "0.11.1"}
 riscv-rt-macros = { path = "macros", version = "0.2.1" }
 
 [dev-dependencies]
 panic-halt = "0.2.0"
+
+[features]
+s-mode = ["riscv-rt-macros/s-mode"]
+single-hart = []
+v-trap = ["riscv-rt-macros/v-trap"]
+u-boot = ["riscv-rt-macros/u-boot", "single-hart"]

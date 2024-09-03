@@ -10,12 +10,23 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Add `pre_init_trap` to detect early errors during the boot process.
+- Add `v-trap` feature to enable interrupt handling in vectored mode.
+- Add `interrupt` proc macro to help defining interrupt handlers.
+If `v-trap` feature is enabled, this macro also generates its corresponding trap.
+- Add `u-boot` feature, so that you can start your elf binary with u-boot and
+work with passed arguments.
+- Initial support for rv32e
 
 ### Changed
 
 - Moved all the assembly code to `asm.rs`
 - Use `weak` symbols for functions such as `_mp_hook` or `_start_trap`
-- Initial support for rv32e
+- `abort` is now `weak`, so it is possible to link third-party libraries including this symbol.
+- Made `cfg` variable selection more robust for custom targets
+- `_start_trap_rust` now only deals with exceptions. When an interrupt is detected, it now calls
+to `_dispatch_interrupt`.
+- Upgrade rust-version to 1.61
+- Update `syn` to version 2.0
 
 ### Removed
 

@@ -5,6 +5,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+
+- Made `cfg` variable selection more robust for custom targets
+- Fixed debug::exit() on riscv64 QEMU simulation
+- Fixed an ambiguous link in the generated crate documentation.
+
 ## [v0.1.0] - 2023-01-18
 
 - Add recommendation for `semihosting` in README.md.

@@ -36,9 +36,11 @@
 #![allow(clippy::missing_safety_doc)]
 
 pub mod asm;
+pub(crate) mod bits;
 pub mod delay;
 pub mod interrupt;
 pub mod register;
+pub use riscv_pac::*;
 
 #[macro_use]
 mod macros;

@@ -7,15 +7,31 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- Add `Mcause::from(usize)` for use in unit tests
+- Add `Mstatus::from(usize)` for use in unit tests
+- Add `Mstatus.bits()`
+- Add `Eq` and `PartialEq` for `pmpcfgx::{Range, Permission}`
+- Add `Mstatus::update_*` helpers to manipulate Mstatus values without touching
+  the CSR
+- Export `riscv::register::macros` module macros for external use
+- Add `riscv::register::mcountinhibit` module for `mcountinhibit` CSR
+- Add `Mcounteren` in-memory update functions 
+- Add `Mstatus` vector extension support
+- Add fallible counterparts to all functions that `panic`
+
 ### Fixed
 
 - Fixed `sip::set_ssoft` and `sip::clear_ssoft` using wrong address
+- Fixed assignment in `mstatus` unit tests.
 
 ## [v0.11.1] - 2024-02-15
 
 ### Changed
 
 - Made `asm::wfi`, `fence`, `fence_i` and `sfence` safe (ie, removed `unsafe` from their definitions)
+- Made `cfg` variable selection more robust for custom targets
 
 ## [v0.11.0] - 2024-01-14
 
