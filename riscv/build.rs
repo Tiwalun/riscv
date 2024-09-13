@@ -13,5 +13,7 @@ fn main() {
     } else if target_arch == "riscv64" {
         println!("cargo:rustc-cfg=riscv");
         println!("cargo:rustc-cfg=riscv64");
+    } else {
+        panic!("Unsupported target architecture: {}", target_arch);
     }
 }

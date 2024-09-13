@@ -1,6 +1,6 @@
 [package]
 name = "riscv-rt"
-version = "0.13.0"
+version = "0.12.2"
 rust-version = "1.61"
 repository = "https://github.com/rust-embedded/riscv"
 authors = ["The RISC-V Team <risc-v@teams.rust-embedded.org>"]
@@ -10,10 +10,10 @@ documentation = "https://docs.rs/riscv-rt"
 keywords = ["riscv", "runtime", "startup"]
 license = "ISC"
 edition = "2021"
-links = "riscv-rt" # Prevent multiple versions of riscv-rt being linked
+links = "riscv-rt"                                             # Prevent multiple versions of riscv-rt being linked
 
 [dependencies]
-riscv = {path = "../riscv", version = "0.11.1"}
+riscv = { path = "../riscv", version = "0.11.1" }
 riscv-rt-macros = { path = "macros", version = "0.2.1" }
 
 [dev-dependencies]

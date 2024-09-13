@@ -364,7 +364,7 @@ enum RiscvArch {
 }
 
 /// Size of the trap frame (in number of registers)
-const TRAP_SIZE: usize = 16;
+const TRAP_SIZE: usize = 10; // 16;
 
 #[rustfmt::skip]
 /// List of the register names to be stored in the trap frame
@@ -373,18 +373,18 @@ const TRAP_FRAME: [&str; TRAP_SIZE] = [
     "t0",
     "t1",
     "t2",
-    "t3",
-    "t4",
-    "t5",
-    "t6",
+    //"t3",
+    //"t4",
+    //"t5",
+    //"t6",
     "a0",
     "a1",
     "a2",
     "a3",
     "a4",
     "a5",
-    "a6",
-    "a7",
+    //"a6",
+    //"a7",
 ];
 
 /// Generate the assembly instructions to store the trap frame.
@@ -456,14 +456,12 @@ fn weak_start_trap(arch: RiscvArch) -> TokenStream {
         RiscvArch::Rv64 => 8,
     };
     // ensure we do not break that sp is 16-byte aligned
-    #[cfg(not(riscve))]
-    if (TRAP_SIZE * width) % 16 != 0 {
-        return parse::Error::new(Span::call_site(), "Trap frame size must be 16-byte aligned")
-            .to_compile_error()
-            .into();
-    }
+    //if (TRAP_SIZE * width) % 16 != 0 {
+    //    return parse::Error::new(Span::call_site(), "Trap frame size must be 16-byte aligned")
+    //        .to_compile_error()
+    //        .into();
+    //}
 
-    #[cfg(riscve)]
     if (TRAP_SIZE * width) % 4 != 0 {
         return parse::Error::new(Span::call_site(), "Trap frame size must be 4-byte aligned")
             .to_compile_error()
